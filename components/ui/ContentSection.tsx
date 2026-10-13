@@ -1,12 +1,11 @@
-import { ReactNode } from 'react';
+import { ReactNode, HTMLAttributes } from 'react';
 import { Card } from './Card';
 import { cn } from '@/lib/utils/cn';
 
-interface ContentSectionProps {
+interface ContentSectionProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
   description?: string;
   children?: ReactNode;
-  className?: string;
 }
 
 export function ContentSection({
@@ -14,9 +13,10 @@ export function ContentSection({
   description,
   children,
   className,
+  ...props
 }: ContentSectionProps) {
   return (
-    <Card hover className={cn('min-h-[200px]', className)}>
+    <Card hover className={cn('min-h-[200px]', className)} {...props}>
       <h3 className="text-xl font-semibold text-foreground mb-2">{title}</h3>
       {description && (
         <p className="text-secondary text-sm mb-4">{description}</p>

@@ -71,6 +71,26 @@ npm start
 npm run lint
 ```
 
+### Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+**Test Coverage:**
+- ✅ 66 unit tests across 8 test suites
+- ✅ UI Components (Button, Input, Card, ContentSection)
+- ✅ Hooks (useLocalStorage, useTheme, useAuth)
+- ✅ Contexts (ThemeContext, AuthContext)
+- ✅ Utilities (cn function)
+
 ## Project Structure
 
 ```
