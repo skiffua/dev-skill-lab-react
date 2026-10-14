@@ -19,13 +19,21 @@ A modern, full-featured React application built with Next.js 16, React 19, and T
   - Username: `demo`
   - Password: `demo123`
 
-### 📱 **6 Content Pages**
-1. **Алгоритми** (`/algorithms`) - Algorithms showcase
-2. **JavaScript** (`/javascript`) - Modern JS features
-3. **CSS Features** (`/css-showcase`) - CSS techniques
-4. **Components** (`/components-demo`) - React patterns
-5. **Animations** (`/animations`) - Animation examples
-6. **Data Visualization** (`/data-visualization`) - Charts & graphs
+### 📱 **7 Content Pages**
+1. **Алгоритми** (`/algorithms`) - **Live coding** algorithms with interactive examples
+2. **Patterns** (`/patterns`) - **Live coding** design patterns (NEW!)
+3. **JavaScript** (`/javascript`) - Modern JS features
+4. **CSS Features** (`/css-showcase`) - CSS techniques
+5. **Components** (`/components-demo`) - React patterns
+6. **Animations** (`/animations`) - Animation examples
+7. **Data Visualization** (`/data-visualization`) - Charts & graphs
+
+### 💻 **Live Coding**
+- **Interactive code editor** with real-time preview
+- Edit and run code directly in the browser
+- Pre-built examples for algorithms and design patterns
+- Syntax highlighting with theme support
+- See [LIVE_CODING.md](LIVE_CODING.md) for usage guide
 
 ### 🎯 **Modern Tech Stack**
 - **Next.js 16.3.8** - App Router with route groups

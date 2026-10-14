@@ -6,6 +6,7 @@ export interface NavLink {
 
 export const mainNavigation: NavLink[] = [
   { href: '/algorithms', label: 'Алгоритми' },
+  { href: '/patterns', label: 'Patterns' },
   { href: '/javascript', label: 'JavaScript' },
   { href: '/css-showcase', label: 'CSS Features' },
   { href: '/components-demo', label: 'Components' },
