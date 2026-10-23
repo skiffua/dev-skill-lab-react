@@ -4,15 +4,9 @@ export const simpleTest = `function Hello() {
 
 render(React.createElement(Hello));`;
 
-export const simpleJSXTest = `const { createElement: h } = React;
-
-const message = "Hello from React!";
-
+export const simpleJSXTest = `const message = "Hello from React!";
 function App() {
-  return h('div', { className: 'p-4 bg-card-bg rounded-lg' },
-    h('h1', { className: 'text-xl font-bold text-primary' }, message),
-    h('p', { className: 'text-secondary mt-2' }, 'This works without JSX!')
-  );
+  return (<div>{message}</div>);
 }
 
-render(h(App));`;
+render(App);`;

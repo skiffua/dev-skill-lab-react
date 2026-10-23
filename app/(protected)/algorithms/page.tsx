@@ -29,6 +29,7 @@ export default function AlgorithmsPage() {
             title="Simple JSX Test"
             description="Testing if JSX works in react-live"
             code={simpleJSXTest}
+            noInline={true} // <--- ДОДАНО
           />
         </section>
 
@@ -42,12 +43,14 @@ export default function AlgorithmsPage() {
               title="Bubble Sort"
               description="Простий алгоритм сортування. Порівнює сусідні елементи і міняє їх місцями."
               code={bubbleSortExample}
+              noInline={true}
             />
 
             <CodePlayground
               title="Quick Sort"
               description="Ефективний алгоритм сортування методом розділяй і володарюй."
               code={quickSortExample}
+              noInline={true}
             />
           </div>
         </section>
@@ -62,6 +65,7 @@ export default function AlgorithmsPage() {
               title="Binary Search"
               description="Швидкий пошук в відсортованому масиві. O(log n) складність."
               code={binarySearchExample}
+              noInline={true}
             />
           </div>
         </section>
@@ -76,6 +80,7 @@ export default function AlgorithmsPage() {
               title="Fibonacci (Memoization)"
               description="Числа Фібоначчі з мемоізацією для оптимізації."
               code={fibonacciExample}
+              noInline={true}
             />
           </div>
         </section>
