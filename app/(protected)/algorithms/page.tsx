@@ -4,6 +4,8 @@ import { Container } from '@/components/ui/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { CodePlayground } from '@/components/ui/CodePlayground';
 import {
+  permutationExample,
+  permutationAIImprovedExample,
   bubbleSortExample,
   binarySearchExample,
   quickSortExample,
@@ -31,6 +33,28 @@ export default function AlgorithmsPage() {
             code={simpleJSXTest}
             noInline={true} // <--- ДОДАНО
           />
+        </section>
+
+        {/* Permutation */}
+        <section>
+          <h2 className="text-2xl font-bold text-foreground mb-4">
+            Перестановки
+          </h2>
+          <div className="space-y-6">
+            <CodePlayground
+                title="Bubble Sort"
+                description="Перестановки. Алгоритм перебору усіх варіантів."
+                code={permutationExample}
+                noInline={true}
+            />
+
+            <CodePlayground
+                title="Bubble Sort"
+                description="Перестановки. Алгоритм перебору усіх варіантів (покращений ШІ)."
+                code={permutationAIImprovedExample}
+                noInline={true}
+            />
+          </div>
         </section>
 
         {/* Sorting Algorithms */}

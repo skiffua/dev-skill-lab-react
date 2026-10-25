@@ -1,3 +1,127 @@
+export const permutationExample = `const elements = [3,4,1,2]
+elements.sort((a, b) => a - b);
+const k = elements.length
+const perms = [];
+perms.push([...elements]);
+
+const findPair = (el, j) => {
+  let pair = null;
+  let n = k - 1
+  while (n >= j && elements[n] <= el) {
+    n--;    
+  }
+  return {
+    pair: elements[n],
+    index: n,    
+    }
+}
+
+const switchElements = (el, elIndex, pair, pairIndex) => {
+  let c = el;
+  elements[elIndex] = pair;
+  elements[pairIndex] = el;
+}
+
+const alignmentElements = (index) => {
+  const count = Math.trunc((k - index) / 2);
+  for (let i = 0; i < count; i ++) {
+    let c = elements[index + i];
+    elements[index + i] = elements[k - 1 - i]
+    elements[k - 1 - i] = c
+  }
+}
+
+let m = k
+while (m > 0) {
+  if (elements[m-1] < elements[m]) {
+    const { pair, index }  = findPair(elements[m-1], m);
+    switchElements(elements[m-1], m-1, pair, index);
+    alignmentElements(m)
+    perms.push([...elements]);
+    console.log('new elements => ',m, ' ', elements);
+    m = k;
+  }
+  m--;
+}
+
+console.log('perms', perms);
+
+
+render(
+    <div className='mb-2'>
+        <p className='mb-2'>
+            <strong>Input: [ {elements.join(', ')} ]</strong>
+        </p>
+        <p className='text-primary font-semibold'>
+            <ul>
+                {perms.map((el, ind) => 
+                    <li><strong>Варіант {ind + 1} перестановки: {el.join(', ')}</strong></li>
+                )}
+            </ul>
+        </p>
+        <p className='mt-3 text-sm text-secondary'>
+            Time: O(n!) | Space: O(n)
+        </p>
+    </div>
+);`;
+
+export const permutationAIImprovedExample = `const elements = [3, 4, 1, 2];
+elements.sort((a, b) => a - b);
+const k = elements.length;
+const perms = [[...elements]];
+
+// Функція реверсу хвоста (два вказівники)
+const reverseTail = (startIdx) => {
+  let l = startIdx;
+  let r = k - 1;
+  while (l < r) {
+    [elements[l], elements[r]] = [elements[r], elements[l]];
+    l++;
+    r--;
+  }
+};
+
+let m = k;
+while (m > 0) {
+  if (elements[m - 1] < elements[m]) {
+    // Шукаємо елемент з кінця, який більший за elements[m-1]
+    let n = k - 1;
+    while (elements[n] <= elements[m - 1]) {
+      n--;
+    }
+
+    // Міняємо місцями за допомогою деструктуризації
+    [elements[m - 1], elements[n]] = [elements[n], elements[m - 1]];
+
+    // Обертаємо хвіст
+    reverseTail(m);
+
+    perms.push([...elements]);
+    m = k; // Скидаємо лічильник для пошуку наступної перестановки
+  }
+  m--;
+}
+
+render(
+    <div className='mb-2'>
+        <p className='mb-2'>
+            <strong>Input: [ {elements.join(', ')} ]</strong>
+        </p>
+        <div className='text-primary font-semibold'>
+            <ul>
+                {perms.map((el, ind) => (
+                    <li key={ind}>
+                        <strong>Варіант {ind + 1} перестановки: {el.join(', ')}</strong>
+                    </li>
+                ))}
+            </ul>
+        </div>
+        <p className='mt-3 text-sm text-secondary'>
+            Time: O(n!) | Space: O(n)
+        </p>
+    </div>
+);`;
+
 export const bubbleSortExample = `function bubbleSort(arr) {
   const sorted = [...arr];
   const n = sorted.length;
