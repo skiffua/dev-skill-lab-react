@@ -42,14 +42,14 @@ export default function AlgorithmsPage() {
           </h2>
           <div className="space-y-6">
             <CodePlayground
-                title="Bubble Sort"
+                title="Комбінаторика. Перестановки (Permutation)"
                 description="Перестановки. Алгоритм перебору усіх варіантів."
                 code={permutationExample}
                 noInline={true}
             />
 
             <CodePlayground
-                title="Bubble Sort"
+                title="Комбінаторика. Перестановки (Permutation)"
                 description="Перестановки. Алгоритм перебору усіх варіантів (покращений ШІ)."
                 code={permutationAIImprovedExample}
                 noInline={true}
