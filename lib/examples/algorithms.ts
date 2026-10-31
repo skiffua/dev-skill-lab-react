@@ -21,6 +21,8 @@ const switchElements = (el, elIndex, pair, pairIndex) => {
   elements[elIndex] = pair;
   elements[pairIndex] = el;
 }
+// Switch elements with destruction
+// [elements[m - 1], elements[n]] = [elements[n], elements[m - 1]];
 
 const alignmentElements = (index) => {
   const count = Math.trunc((k - index) / 2);
@@ -30,6 +32,16 @@ const alignmentElements = (index) => {
     elements[k - 1 - i] = c
   }
 }
+// Another approach with tail
+// const reverseTail = (startIdx) => {
+//   let l = startIdx;
+//   let r = k - 1;
+//   while (l < r) {
+//     [elements[l], elements[r]] = [elements[r], elements[l]];
+//     l++;
+//     r--;
+//   }
+// };
 
 let m = k
 while (m > 0) {
@@ -38,14 +50,10 @@ while (m > 0) {
     switchElements(elements[m-1], m-1, pair, index);
     alignmentElements(m)
     perms.push([...elements]);
-    console.log('new elements => ',m, ' ', elements);
     m = k;
   }
   m--;
 }
-
-console.log('perms', perms);
-
 
 render(
     <div className='mb-2'>
@@ -65,53 +73,130 @@ render(
     </div>
 );`;
 
-export const permutationAIImprovedExample = `const elements = [3, 4, 1, 2];
-elements.sort((a, b) => a - b);
-const k = elements.length;
-const perms = [[...elements]];
+export const permutationHeapExample = `const elements = [3, 4, 1, 2];
+let k = elements.length;
+const perms = [];
 
-// Функція реверсу хвоста (два вказівники)
-const reverseTail = (startIdx) => {
-  let l = startIdx;
-  let r = k - 1;
-  while (l < r) {
-    [elements[l], elements[r]] = [elements[r], elements[l]];
-    l++;
-    r--;
-  }
-};
-
-let m = k;
-while (m > 0) {
-  if (elements[m - 1] < elements[m]) {
-    // Шукаємо елемент з кінця, який більший за elements[m-1]
-    let n = k - 1;
-    while (elements[n] <= elements[m - 1]) {
-      n--;
-    }
-
-    // Міняємо місцями за допомогою деструктуризації
-    [elements[m - 1], elements[n]] = [elements[n], elements[m - 1]];
-
-    // Обертаємо хвіст
-    reverseTail(m);
-
+const genPerm = (n) => {
+  if (n === 1) {
     perms.push([...elements]);
-    m = k; // Скидаємо лічильник для пошуку наступної перестановки
+    return; 
   }
-  m--;
+
+  for (let i = 0; i < n; i++) {
+    genPerm(n - 1);
+
+    if (n % 2 === 0) {
+      [elements[i], elements[n - 1]] = [elements[n - 1], elements[i]];
+    } else {
+      [elements[0], elements[n - 1]] = [elements[n - 1], elements[0]];
+    }
+  } 
 }
+
+ // genPerm(n - 1);
+
+  // if (n % 2 === 0) {
+  //   [elements[0], elements[n - 1]] = [elements[n - 1], elements[0]];
+  // } else {
+  //   [elements[0], elements[n]] = [elements[n], elements[0]];
+  // }   
+
+genPerm(k);
 
 render(
     <div className='mb-2'>
         <p className='mb-2'>
             <strong>Input: [ {elements.join(', ')} ]</strong>
         </p>
+        <p className='text-primary font-semibold'>
+            <ul>
+                {perms.map((el, ind) => 
+                    <li><strong>Варіант {ind + 1} перестановки: {el.join(', ')}</strong></li>
+                )}
+            </ul>
+        </p>
+        <p className='mt-3 text-sm text-secondary'>
+            Time: O(n!) | Space: O(n)
+        </p>
+    </div>
+);`;
+
+export const kCombinationExample = `const a = [3, 2, 1, 4, 5];
+const m = 3;
+const k = a.length;
+const bitMirror = [];
+for (let i = 0; i < k; i++) {
+  if (i > k - 1 - m) {
+    bitMirror.push(1);
+  } else {
+    bitMirror.push(0);
+  }
+}
+// const bitMirror = Array.from({ length: k }, (_, i) => (i >= k - m ? 1 : 0));
+
+const generateCombination = () => {
+  const comb = a.reduce((acc, _, ind) => {
+    if (bitMirror[ind] === 1) {
+      acc.push(a[ind]);
+    }
+    return acc;
+  }, []);
+  return comb;
+}
+// const generateCombination = () => a.filter((_, ind) => bitMirror[ind] === 1);
+
+const comb = [];
+comb.push([...generateCombination()]);
+
+
+let i = k - 1
+
+const findPair = (ind, el) => {
+  let j = k - 1;
+  let searchedElInd = null
+  while (j > ind && searchedElInd === null) {    
+    if (bitMirror[j] > el) {
+      searchedElInd = j
+    }
+    j--;
+  }
+  return searchedElInd;
+}
+
+const switchElemenst = (ind1, ind2) => {
+  [bitMirror[ind1], bitMirror[ind2]] = [bitMirror[ind2], bitMirror[ind1]];
+}
+
+const sortInAsc = (ind) => {
+  const elToSort = Math.floor((k - ind) / 2);
+  for (let i = 0; i < elToSort; i++) {
+    [bitMirror[ind +i], bitMirror[k - 1 -i]] = [bitMirror[k - 1 - i], bitMirror[ind + i]];
+  }
+}
+
+while (i > 0) {
+  if (bitMirror[i - 1] < bitMirror[i]) {
+    const ind = findPair(i - 1, bitMirror[i - 1]);
+    switchElemenst(i - 1, ind);
+    sortInAsc(i);
+    i = k - 1;
+    comb.push([...generateCombination()]);
+  } else {
+    i--;
+  }  
+} 
+
+render(
+    <div className='mb-2'>
+        <p className='mb-2'>
+            <strong>Input: [ {a.join(', ')} ]</strong>
+        </p>
         <div className='text-primary font-semibold'>
             <ul>
-                {perms.map((el, ind) => (
+                {comb.map((el, ind) => (
                     <li key={ind}>
-                        <strong>Варіант {ind + 1} перестановки: {el.join(', ')}</strong>
+                        <strong>Варіант {ind + 1} сполучення: {el.join(', ')}</strong>
                     </li>
                 ))}
             </ul>

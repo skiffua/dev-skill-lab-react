@@ -5,7 +5,8 @@ import { SectionHeader } from '@/components/ui/SectionHeader';
 import { CodePlayground } from '@/components/ui/CodePlayground';
 import {
   permutationExample,
-  permutationAIImprovedExample,
+  permutationHeapExample,
+  kCombinationExample,
   bubbleSortExample,
   binarySearchExample,
   quickSortExample,
@@ -31,27 +32,59 @@ export default function AlgorithmsPage() {
             title="Simple JSX Test"
             description="Testing if JSX works in react-live"
             code={simpleJSXTest}
-            noInline={true} // <--- ДОДАНО
+            noInline={true}
           />
         </section>
 
         {/* Permutation */}
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">
-            Перестановки
+            Комбінаторика
           </h2>
           <div className="space-y-6">
             <CodePlayground
-                title="Комбінаторика. Перестановки (Permutation)"
+                title="Перестановки (Permutation). Лексикографічний алгоритм"
                 description="Перестановки. Алгоритм перебору усіх варіантів."
                 code={permutationExample}
                 noInline={true}
             />
+            <CodePlayground
+                title="Перестановки (Permutation). Алгоритм Хіпа"
+                description="Перестановки. Алгоритм перебору усіх варіантів."
+                code={permutationHeapExample}
+                noInline={true}
+            />
+            <h3 className="text-sm font-bold text-secondary mb-4">
+              Повний список основних алгоритмів для генерації перестановок:
+            </h3>
+              <ul className="list-disc text-accent pl-4">
+                <li>
+                  Алгоритм Джонсона-Троттера (Steinhaus–Johnson–Trotter): Генерує всі перестановки за допомогою обміну лише сусідніх елементів (мінімальні зміни на кожному кроці).
+                </li>
+                <li>
+                  Лексикографічний алгоритм: Вибудовує перестановки у строгому порядку зростання (від найменшої до найбільшої, наче слова в словнику).
+                </li>
+                <li>
+                  Алгоритм Хіпа (Heap's Algorithm): Один із найефективніших алгоритмів; для отримання наступної перестановки виконує лише один обмін (swap) елементів.
+                </li>
+                <li>
+                  Безоциклічні алгоритми (Loopless Algorithms, напр., алгоритм Ерліха): Високопродуктивні алгоритми, які генерують кожну наступну перестановку за константний час $O(1)$ без циклів пошуку.
+                </li>
+                <li>
+                  Рекурсивний бектрекінг (Backtracking): Найпростіший для реалізації метод перебору з поверненням (має хаотичний порядок і робить несусідні обміни).
+                </li>
+                <li>
+                  Код Грея для перестановок (Permutation Gray Code): Рекурсивний підхід, який мінімізує кількість транспозицій між сусідніми елементами.
+                </li>
+                <li>
+                  Алгоритм Фішера — Єйтса (Fisher–Yates shuffle): Використовується не для перебору всіх комбінацій, а для швидкого отримання випадкової (рандомної) перестановки за лінійний час.
+                </li>
+              </ul>
 
             <CodePlayground
-                title="Комбінаторика. Перестановки (Permutation)"
-                description="Перестановки. Алгоритм перебору усіх варіантів (покращений ШІ)."
-                code={permutationAIImprovedExample}
+                title="Сполучення (k-combination). Лексикографічний алгоритм"
+                description="Сполучення. Алгоритм визначення комбінацій M із Т різних елементів."
+                code={kCombinationExample}
                 noInline={true}
             />
           </div>
