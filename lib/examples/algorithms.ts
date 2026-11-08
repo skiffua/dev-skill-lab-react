@@ -38,27 +38,23 @@ while (m > 0) {
     switchElements(elements[m-1], m-1, pair, index);
     alignmentElements(m)
     perms.push([...elements]);
-    console.log('new elements => ',m, ' ', elements);
     m = k;
   }
   m--;
 }
-
-console.log('perms', perms);
-
 
 render(
     <div className='mb-2'>
         <p className='mb-2'>
             <strong>Input: [ {elements.join(', ')} ]</strong>
         </p>
-        <p className='text-primary font-semibold'>
+        <div className='text-primary font-semibold'>
             <ul>
                 {perms.map((el, ind) => 
                     <li><strong>Варіант {ind + 1} перестановки: {el.join(', ')}</strong></li>
                 )}
             </ul>
-        </p>
+        </div>
         <p className='mt-3 text-sm text-secondary'>
             Time: O(n!) | Space: O(n)
         </p>

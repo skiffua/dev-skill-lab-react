@@ -3,6 +3,9 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, AUTH_STORAGE_KEY, DEMO_CREDENTIALS } from '@/lib/types/auth';
 
+import { useAppDispatch } from '@/store/hooks';
+import { loginUser, checkAuth } from '@/store/authSlice';
+
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
@@ -14,21 +17,30 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(() => {
+    setIsLoading(() => true);
+    if (typeof window === 'undefined') return null;
+
+    const storedUser = localStorage.getItem(AUTH_STORAGE_KEY);
+    if (!storedUser) return null;
+
+    try {
+      return JSON.parse(storedUser);
+    } catch (error) {
+      console.error('Error parsing stored user:', error);
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      return null;
+    } finally {
+      setIsLoading(() => false);
+    }
+  });
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error('Error parsing stored user:', error);
-        localStorage.removeItem(AUTH_STORAGE_KEY);
-      }
-    }
-    setIsLoading(false);
-  }, []);
+    // Runs strictly once when the app loads in the browser
+    dispatch(checkAuth());
+  }, [dispatch]);
 
   const login = async (username: string, password: string): Promise<boolean> => {
     if (
@@ -38,6 +50,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const userData = DEMO_CREDENTIALS.user;
       setUser(userData);
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(userData));
+
+      // Retrieve token
+      await dispatch(loginUser({ userName: username }));
       return true;
     }
     return false;
